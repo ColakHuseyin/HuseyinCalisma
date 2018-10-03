@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!-- Modify or remove all items marked xxx -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Öğrenci Not Hesaplama </title>
+
+<style>
+    #out { /* CSS code used in out */
+        font-size: 18px;
+        background: blue;
+        color: white;
+        text-align: center;
+        padding: 10px;
+    }
+
+    body{
+        width:400px;
+        margin:0 auto;
+        margin-top:40px;
+        border-style: inset;
+    }
+    #title{
+        width:100%;
+        background-color: #5F9EA0;
+        color: white;
+        text-align:center;
+        font-size:15pt;
+        
+
+    }
+    #con{
+        background-color :#F0FFFF
+    }
+    #btnHesapla{
+        text-align:left;
+    }
+   #footer{
+       font-size:10pt;
+       color:#A9A9A9;
+   } 
+</style>
+
+<script>
+"use strict";
+// JavaScript code used in button
+function cnt() {
+    console.log("Counter = "+count); 
+    return count++; 
+}
+
+function fnHesapla(){
+    let vizeNot=Number(vize.value); let finalNot=Number(final.value); 
+    let lOrtalama=vizeNot*0.4 + finalNot*0.6;
+    document.getElementById('lblOrtalama').innerHTML= lOrtalama;
+    if(lOrtalama<60){
+        document.getElementById('lblDurum').innerHTML= "Kaldı";
+        document.getElementById('lblDurum').style.color = "Red"
+    }   
+    else{
+        document.getElementById('lblDurum').innerHTML= "Geçti";
+        document.getElementById('lblDurum').style.color = "Green"
+        }
+
+}
+
+function fnTemizle(){
+    document.getElementById('lblDurum').innerHTML= "";
+    document.getElementById('lblOrtalama').innerHTML="";
+    vize.value="";
+    final.value="";   
+
+}
+
+</script>
+</head>
+
+<body>
+<div id="con"> 
+    <div id="title" > </div>
+     <hr/>
+     <table>
+         <tr>
+             <td>Vize :
+             </td>
+             <td><input type="text" id="vize"><br>
+             </td>
+         </tr>
+         <tr>
+             <td>Final :
+             </td>
+             <td><input type="text" id="final"><br>
+             </td>
+         </tr>
+     </table>
+     <hr/>
+    <button id="btnHesapla" onClick="fnHesapla()">Hesapla</button> 
+    <button id="btnTemizle" onClick="fnTemizle()">Temizle</button> 
+    <hr/>
+    <table>
+        <tr>
+            <td> Ortalama :
+            </td>
+            <td><label id="lblOrtalama"></label>
+            </td>
+        </tr>
+        <tr>
+            <td> Durum:
+            </td>
+            <td> <label id="lblDurum"></label>
+            </td>
+        </tr>
+    </table>
+    <p id="footer">Not: Vize Notu %40, Final Notu %60 üzerinden hesaplanmaktadır. Geçme notu: 60'tır</p>
+</div>
+
+<!--<button onClick="cnt()">xxx</button>
+
+<p id=out></p>
+
+<hr />
+<b>Sample code</b>
+<pre id=sample></pre>
+
+<hr />
+<p>Ref: <a href="https://www.w3schools.com/js/" 
+   target="ExternalDocument">JS Tutorial</a>
+</p>
+-->
+<script>
+    //global variable id is the HTML element with id 
+    //const title = document.getElementById("title");
+    title.innerText = document.title;
+    //sample.innerText = cnt.toString();
+    //out.innerHTML = "Modify all items marked xxx";
+    var count = 0; cnt();
+</script>
+
+</body>
+</html>
