@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Homework 1 - Hüseyin Çolak </title>
+    <script>
+        "use strict";
+        function push() {
+            var ogrenci=[iName.value, iMidterm.value, iFinal.value];
+            a.push(ogrenci); 
+            }
+        function reportA() {
+        outA.innerText="";
+        c1.innerText="Name";
+        c2.innerText="Midterm";
+        c3.innerText="Final";
+        a1.textContent="";
+       	a2.textContent="";
+	a3.textContent="";
+        for(var i=0; i<a.length; i++){
+	  a1.textContent +=a[i][0] + ' ' ;
+	  a2.textContent +=a[i][1] + ' ' ;
+	  a3.textContent +=a[i][2] + ' ' ;
+	}
+        a1.innerHTML = a1.innerHTML.replace(' ', '<br />');
+        a2.innerHTML = a2.innerHTML.replace(' ', '<br />');
+        a3.innerHTML = a3.innerHTML.replace(' ', '<br />');
+        }
+
+        function avg() {
+            c1.innerText="Name";
+            c2.innerText="Average";
+            c3.innerText="";
+            a1.textContent="";
+       	    a2.textContent="";
+	    a3.textContent="";
+            var avgL=[];
+            var vAvg=0;
+            for(var i=0; i<a.length; i++){
+                vAvg = (Number(a[i][1])+Number(a[i][2]))/2;
+                avgL.push([a[i][0], vAvg])
+            }
+            for(var i=0; i<avgL.length; i++){
+	  	a1.textContent +=avgL[i][0] + ' ' ;
+	  	a2.textContent +=avgL[i][1] + ' ' ;
+	    }
+	  a1.innerHTML = a1.innerHTML.replace(' ', '<br />');
+          a2.innerHTML = a2.innerHTML.replace(' ', '<br />');
+            //outA.innerText="Name-Average" + "\n"+avgL.join("\n");
+            
+         }
+         function maximum(){
+            c1.innerText="Name";
+            c2.innerText="Max";
+            c3.innerText="";
+            a1.textContent="";
+       	    a2.textContent="";
+	    a3.textContent="";
+             var vMax=0;
+             var maxIndex=-1;
+             for(var i=0; i<a.length; i++){
+                if(((Number(a[i][1])+Number(a[i][2]))/2)>vMax)
+                {
+                    maxIndex=i;
+                    vMax=((Number(a[i][1])+Number(a[i][2]))/2);
+                }
+            }
+            a1.textContent = a[maxIndex][0];
+            a2.textContent = vMax;
+
+         }
+    </script>
+</head>
+
+<body>
+    <h2> Add Course </h2>
+    <table>
+        <tr>
+            <td>Name</td>
+            <td><input id="iName"/></td>
+        </tr>
+        <tr>
+            <td>Midterm</td>
+            <td><input id="iMidterm"/></td>
+        </tr>
+        <tr>
+            <td>Final</td>
+            <td><input id="iFinal"/></td>
+        </tr>
+        <tr>
+            <td><input type=button value="Add"  onClick="push()"></td>
+        </tr>
+        <tr>
+            <td>
+                <input type=button value="Print"  onClick="reportA()">
+            </td>
+            <td>
+                <input type=button value="Avg"  onClick="avg()">
+                <input type=button value="Max"   onClick="maximum()">
+            </td>
+        </tr>
+    </table>
+    <table>
+	<tr>
+          <td> <text id="c1" style="font-weight: bold;"></text>
+          </td>
+          <td><text id="c2" style="font-weight: bold;"></text>
+          </td>
+          <td><text id="c3" style="font-weight: bold;"></text>
+          </td>
+        </tr>
+        <tr>
+         <td> <p id="a1"></p>
+          </td>
+          <td><p id="a2"></p>
+          </td>
+          <td><p id="a3"></p>
+          </td>
+        </tr>
+    </table>
+    <div id=outA></div>
+    <script>
+        const a = [];
+    </script>
+
+
+</body>
+</html>
