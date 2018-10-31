@@ -43,11 +43,8 @@ function fileSelect(t) { //target is the button
 function hide() {
     state.style.visibility = "hidden";
 }
-function show(v) {
-    state.value = v; state.style.visibility = "";
-}
+
 function report(t, n) {
-    show("OK"); setTimeout(hide, 1000);
     out.innerText = t;
     console.log(n? n : t);
 }
