@@ -33,6 +33,7 @@ function fileSelect(t) { //target is the button
             const a = evt.target.result.replace(/</g, "&lt;");
             //out.innerHTML = "<pre>"+a+"</pre>";
 	    text1 = a;
+	    compare();
             //console.log(f.name+size+f.type);
         };
         reader.readAsText(f);
