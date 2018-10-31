@@ -8,6 +8,7 @@
 
 <script>
 "use strict";
+let text1, text2, dosyaAdi;
 const reader = new FileReader();
 function isText(f) {
     console.assert(f instanceof File);
@@ -30,16 +31,26 @@ function fileSelect(t) { //target is the button
     } else if (isText(f)) {
         reader.onload = function(evt) { //text
             const a = evt.target.result.replace(/</g, "&lt;");
-            out.innerHTML = "<pre>"+a+"</pre>";
-            console.log(f.name+size+f.type);
+            //out.innerHTML = "<pre>"+a+"</pre>";
+	    text1 = a;
+            //console.log(f.name+size+f.type);
         };
         reader.readAsText(f);
     } else {
-        msg.innerText += "Unknown ";
-        out.innerText = "";
+	text1= "";
+        //msg.innerText += "Unknown ";
+        //out.innerText = "";
     }
+    
 }
 
+function compare(){
+	/*if(text1==text2)
+	  out.innerHTML += "<pre>"+ dosya_adi +" - eslesti"+"</pre>";
+	else
+	  out.innerHTML += "<pre>"+ dosya_adi +" - eslesmedi"+"</pre>";*/
+	out.innerHTML = text1;
+}
 function hide() {
     state.style.visibility = "hidden";
 }
@@ -73,6 +84,7 @@ function readBlob() {
 <body>
 <h2 id=title></h2>
 <input type=text id=url value="test.txt">
+
 <input type=button value="text" onClick="readText()">
 <input type=file id=button onChange='fileSelect(this)' multiple/>
 <p>
