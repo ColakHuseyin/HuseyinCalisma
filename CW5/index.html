@@ -33,6 +33,7 @@ function fileSelect(t) { //target is the button
             const a = evt.target.result.replace(/</g, "&lt;");
             //out.innerHTML = "<pre>"+a+"</pre>";
 	    text1 = a;
+	    dosyaAdi=f.name;
 	    compare();
             //console.log(f.name+size+f.type);
         };
@@ -46,12 +47,11 @@ function fileSelect(t) { //target is the button
 }
 
 function compare(){
-	/*if(text1==text2)
+	if(text1==text2)
 	  out.innerHTML += "<pre>"+ dosya_adi +" - eslesti"+"</pre>";
 	else
-	  out.innerHTML += "<pre>"+ dosya_adi +" - eslesmedi"+"</pre>";*/
-	out.innerHTML = text1;
-	out.innerHTML += text2;
+	  out.innerHTML += "<pre>"+ dosya_adi +" - eslesmedi"+"</pre>";
+
 }
 function hide() {
     state.style.visibility = "hidden";
