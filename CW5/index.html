@@ -49,7 +49,6 @@ function report(t, n) {
     console.log(n? n : t);
 }
 function readText() {
-    show("FT"); // fetch text
     fetch(url.value)
       .then(r => r.text()) 
       //response of fetch() is r
@@ -57,7 +56,6 @@ function readText() {
       //response of text() is t
 }
 function readBlob() {
-    show("FB"); // fetch blob
     fetch(url.value)
       .then(r => r.blob())  //response r
       .then(b => report(b.size+" bytes"));
