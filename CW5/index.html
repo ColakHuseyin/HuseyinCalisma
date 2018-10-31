@@ -16,6 +16,7 @@ function isText(f) {
          || f.name.endsWith(".js") || f.name.endsWith(".java");
 }
 function fileSelect(t) { //target is the button
+    readText();
     console.assert(t == button);
     const f = t.files[0];
     const size = " "+f.size+" bytes ";
@@ -48,9 +49,9 @@ function fileSelect(t) { //target is the button
 
 function compare(){
 	if(text1==text2)
-	  out.innerHTML += "<pre>"+ dosyaAdi +" - eslesti"+"</pre>";
+	  out.innerHTML += "<pre>"+ dosya_adi +" - eslesti"+"</pre>";
 	else
-	  out.innerHTML += "<pre>"+ dosyaAdi +" - eslesmedi"+"</pre>";
+	  out.innerHTML += "<pre>"+ dosya_adi +" - eslesmedi"+"</pre>";
 
 }
 function hide() {
@@ -62,14 +63,16 @@ function report(t, n) {
     console.log(n? n : t);
 }
 function readText() {
-    fetch(url.value)
+    let url="test.txt";
+    fetch(url)
       .then(r => r.text()) 
       //response of fetch() is r
       .then(t => text2=t);  
       //response of text() is t
 }
 function readBlob() {
-    fetch(url.value)
+    let url="test.txt";
+    fetch(url)
       .then(r => r.blob())  //response r
       .then(b => report(b.size+" bytes"));
 }
@@ -87,7 +90,6 @@ function readBlob() {
 <h2 id=title></h2>
 <input type=text id=url value="test.txt">
 
-<input type=button value="text" onClick="readText()">
 <input type=file id=button onChange='fileSelect(this)' multiple/>
 <p>
 <output id=msg>Select text or image </output>
