@@ -8,7 +8,7 @@
 
 <script>
 "use strict";
-let text1, text2, dosya_adi;
+let text1, text2, dosyaAdi;
 const reader = new FileReader();
 function isText(f) {
     console.assert(f instanceof File);
@@ -53,9 +53,9 @@ function fileSelect(t) { //target is the button
 
 function compare(){
 	if(text1==text2)
-	  out.innerHTML += "<pre>"+ dosya_adi +" - eslesti"+"</pre>";
+	  out.innerHTML += "<pre>"+ dosyaAdi +" - eslesti"+"</pre>";
 	else
-	  out.innerHTML += "<pre>"+ dosya_adi +" - eslesmedi"+"</pre>";
+	  out.innerHTML += "<pre>"+ dosyaAdi +" - eslesmedi"+"</pre>";
 
 }
 function hide() {
