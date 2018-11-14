@@ -6,3 +6,4 @@
 4. [CW4](https://colakhuseyin.github.io/HuseyinCalisma/CW4/index.html)
 5. [HW2](https://colakhuseyin.github.io/HuseyinCalisma/HW2/database.html)
 6. [CW5](https://colakhuseyin.github.io/HuseyinCalisma/CW5/index.html)
+7. [CW6](https://colakhuseyin.github.io/HuseyinCalisma/CW6/timing.html)
