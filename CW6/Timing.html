@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<!-- saved from url=(0049)https://maeyler.github.io/BLM305/exam/Timing.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width">
+    <script src="./Timing_files/Database.js"></script>
+    <title>Set Intersection </title>
+
+<script>
+"use strict";
+const url = "https://maeyler.github.io/JS/data/";
+const array = [], map = new Map();
+function readData(file) {
+    console.log("readData "+file);
+    fetch(url+file)
+        .then(r => r.text(), console.log)
+        .then(addStudents, console.log);
+}
+function parseStudent(line) {
+    let b = line.split("\t");
+    let id = b[0], name = b[1], gpa = b[2];
+    let std = new Student(id, name, gpa);
+    let list = [];
+    for (let i=3; i<b.length; i++) 
+        list.push(b[i]);
+    std.courses = list
+    return std
+}
+function addStudents(txt) {
+    let msg = "\nData contains ";
+    msg += txt.length+" chars, ";
+    let a = txt.split("\n");
+    msg += a.length+" lines \n";
+    for (let s of a) {
+      let std = parseStudent(s);
+      array.push(std.id); map.set(std.id ,std.name);
+    }
+    msg += array.length+" students, "
+    msg += m.size+" distinct names"
+    out.innerText += msg
+}
+/*function intersect1(a, b) { //array
+    let s = new Set()
+    for (let x of array)
+      if (b.has(x)) s.add(x)
+    return s
+}
+
+function intersect2(a, b) { //map
+    let s = new Set()
+    for (let x of a)
+      for (let y of b)
+        if (x == y) s.add(x)
+    return s
+}
+*/
+function timing() {
+    let randomStudents;
+    let countArr=0, countMap=0, perArr=0, perMap=0;
+    let stuId;
+    for(let i=0; i<10000; i++){
+	stuId=213010027;
+	stuId=stuId+Math.floor(Math.random() * 1000);
+	stuId=stuId.toString();
+	let pA=performance.now();
+	if(array.includes(stuId))
+	   countArr++;
+
+	perArr=performance.now()-pA
+
+	let pM=performance.now();
+	if(map.has(stuId))
+	   countMap++;
+	pM=performance.now()-pM;
+
+	perMap+=pM;
+	perArr+=pA;
+
+    }
+    console.log(stuId);
+
+    let s = "Array : "+perArr.toPrecision(4)+" msec found :"+countArr
+    +"\nMap : "+perMap.toPrecision(4)+" msec found :"+countMap;
+
+    out.innerText += "\n"+s; console.log(s);
+}
+</script>
+</head>
+
+<body>
+<h2 id="title">Set Intersection</h2>
+<button onclick="timing()">Test</button>
+<p id="out">Question 3 in the exam<br>Data contains 189314 chars, 3129 lines <br>3129 students, 1135 distinct names</p>
+<hr>
+<b>Sample code</b>
+<pre id="sample">function intersect1(a, b) { //fast<br>    let s = new Set()<br>    for (let x of a)<br>      if (b.has(x)) s.add(x)<br>    return s<br>}<br>function intersect2(a, b) { //slow<br>    let s = new Set()<br>    for (let x of a)<br>      for (let y of b)<br>        if (x == y) s.add(x)<br>    return s<br>}</pre>
+<hr>
+
+<script>
+    title.innerText = document.title;
+    //sample.innerText = intersect1+"\n"+intersect2;
+    readData("Students.txt");
+</script>
+
+
+
+</body></html>
