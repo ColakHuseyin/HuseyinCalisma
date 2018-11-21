@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052)https://maeyler.github.io/JS/hard/Table%20maker.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width">
+    <link rel="manifest" href="manifest.json">
+    <title>CW7</title>
+<script>
+	"use strict";
+	//June 8, 2018 MAE -- basis for 
+	//https://maeyler.github.io/Visual-Mujam/
+	//
+
+	function makeTableHTML() {
+	var myArray=[
+		{ID:"116690070", AD:"TEKİN",    ORT:"1.35"},
+		{ID:"116690190", AD:"ŞEYMA",    ORT:"2.14"},
+		{ID:"116690249", AD:"BERKAY",   ORT:"2.14"},
+		{ID:"116690267", AD:"FATMANUR",	ORT:"2.99"},
+		{ID:"116690318", AD:"YAĞMUR",   ORT:"1.7"},	
+		{ID:"116690337", AD:"HAKAN",    ORT:"3.19"},	
+		{ID:"116690352", AD:"BUKEYHAN",	ORT:"2.78"},	
+		{ID:"116690495", AD:"ESRA",     ORT:"2.46"},	
+		{ID:"116690546", AD:"OLCAYTUĞ",	ORT:"2.41"},
+		{ID:"116690555", AD:"CEYHUN",   ORT:"3.16"},	
+		{ID:"116690715", AD:"NUR",      ORT:"2.95"},
+		{ID:"116690769", AD:"DORUKAY",  ORT:"1.94"},
+		{ID:"116690818", AD:"FURKAN",   ORT:"3.91"},
+		{ID:"116690881", AD:"BÜŞRA",    ORT:"1.59"},
+		{ID:"116690893", AD:"HİLAL",    ORT:"1.91"},
+		{ID:"116690916", AD:"RIDVAN",   ORT:"2.8"},	
+		{ID:"116691034", AD:"DİLARA",   ORT:"3.58"}
+	];
+    	var result = "<table border=1> <tr>";
+	for(var i=0;i<Object.keys(myArray[0]).length;i++)
+        {
+		result += "<th>"+Object.keys(myArray[0])[i]+"</th>"; 
+	}
+	result+="</tr>";
+    	for(var i=0; i<myArray.length; i++) {
+        	result += "<tr>";
+        	for(var j=0; j<Object.keys(myArray[i]).length; j++){
+            		result += "<td>"+ myArray[i][Object.keys(myArray[i])[j]]+"</td>";
+        	}
+        result += "</tr>";
+    }
+    result += "</table>";
+
+    document.getElementById("T1").innerHTML=result;
+}
+</script>
+</head>
+
+
+
+<body>
+<center>
+<div id="T1" style="border:0px solid black;width:300;padding:5"></div> 
+<button onclick="makeTableHTML();">Tablo Oluştur </button>
+</center>
+ 
+</body>
+</html>
