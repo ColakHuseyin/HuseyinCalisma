@@ -3,7 +3,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width">
     <title>Hüseyin Çolak Homepage </title>
-
+    <script>
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker
+            .register('sw.js')
+            .then((reg) => { console.log('SW Registered', reg) })
+            .catch(console.log)
+        }
+    </script>
+    
     <style>
         #content {
             margin: 0 auto;
