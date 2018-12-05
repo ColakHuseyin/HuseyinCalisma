@@ -51,7 +51,7 @@
     </tr>
     <tr>
         <td colspan=2><h4>Boy</h4></td>
-        <td><input type="number" name="quantity" min="1" max="99" id="circBoy" value=50 onchange="ciz()" /></td>
+        <td><input type="number" name="quantity" min="1" max="99" id="circBoy" value=40 onchange="ciz()" /></td>
         <td><input type="number" name="quantity" min="1" max="250" id="rectBoy" value=80 onchange="ciz()" /></td>
     </tr>
 </table>
@@ -71,7 +71,7 @@ function draw() {
     cx.clearRect(0,0, 340, 100)
     cx.beginPath(); cx.lineWidth = document.getElementById("circKalinlik").value;
     cx.fillStyle = document.getElementById("circRenk").value; cx.strokeStyle = "blue";
-    cx.arc(50, 50, 40, 0, 2*Math.PI);
+    cx.arc(50, 50, document.getElementById("circBoy").value, 0, 2*Math.PI);
     cx.fill(); cx.stroke();
     cx.fillStyle = "black"; 
     cx.fillText("arc",44,55);
