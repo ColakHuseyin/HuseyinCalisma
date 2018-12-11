@@ -10,3 +10,4 @@
 8.  [CW7](https://colakhuseyin.github.io/HuseyinCalisma/CW7/index.html)
 9.  [HW3](https://colakhuseyin.github.io/HuseyinCalisma/HW3/HW3.html)
 10. [CW9](https://colakhuseyin.github.io/HuseyinCalisma/CW9/Graphics.html)
+11. [Project](https://colakhuseyin.github.io/HuseyinCalisma/Daily/index.html)
