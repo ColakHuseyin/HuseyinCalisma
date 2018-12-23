@@ -1,12 +1,27 @@
-﻿<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <title>Website Homework</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyCIFpRngDl7RkwbTz_qY-N8qtNq5JeGDL8",
+            authDomain: "daily-b47b4.firebaseapp.com",
+            databaseURL: "https://daily-b47b4.firebaseio.com",
+            projectId: "daily-b47b4",
+            storageBucket: "daily-b47b4.appspot.com",
+            messagingSenderId: "208212779745"
+        };
+        firebase.initializeApp(config);
+    </script>
+
     <script>
         // Get the modal
         var giris_yapildi = 0;
+        var uId;
         var modal = document.getElementById('id01');
 
         // When the user clicks anywhere outside of the modal, close it
@@ -19,6 +34,7 @@
         function kullanici_giris_ekrani() {
             if (document.getElementById("log").innerText == "Log In") {
                 document.getElementById('id01').style.display = 'block';
+                document.getElementById("log2").style.display = 'none';
 
             }
             else {
@@ -27,9 +43,17 @@
                 inPass.value = "";
                 dailyText.value = "";
                 dateInput.value = "gg.aa.yyyy";
-                giris_yap();
+                document.getElementById("menuList").innerHTML = "";
+                document.getElementById("con").style.opacity = 0.6;
+                document.getElementById("log").innerText = "Log In";
+                document.getElementById("con").style.pointerEvents = 'none';
+                document.getElementById("log2").style.display = 'block';
 
             }
+        }
+
+        function singup() {
+            document.getElementById('singup').style.display = 'block';
         }
 
         function writeUserData(userId, date, daily) {
@@ -49,7 +73,7 @@
 
         function saveDaily() {
             if (dailyText.value.length > 14) {
-                writeUserData("1", dateInput.value, dailyText.value);
+                writeUserData(uId, dateInput.value, dailyText.value);
                 getDaily();
             }
             else
@@ -70,24 +94,26 @@
                 snapshot.forEach(
                     function (child) {
                         let a = child.val();
-                        for (var i in a) {
-                            var textDaily;
-                            if (i == "date") {
-                                var link = document.createElement("a");
-                                var ulist = document.getElementById("menuList");
-                                var newItem = document.createElement("li");
+                        if (uId == a["username"]) {
+                            for (var i in a) {
+                                var textDaily;
+                                if (i == "date") {
+                                    var link = document.createElement("a");
+                                    var ulist = document.getElementById("menuList");
+                                    var newItem = document.createElement("li");
 
-                                link.textContent = a[i];
-                                link.setAttribute('href', "#");
+                                    link.textContent = a[i];
+                                    link.setAttribute('href', "#");
+                                }
+                                else if (i == "daily")
+                                    textDaily = a[i];
                             }
-                            else if (i == "daily")
-                                textDaily = a[i];
+                            link.onclick = function () {
+                                read(textDaily, link.textContent)
+                            }
+                            newItem.appendChild(link);
+                            ulist.appendChild(newItem);
                         }
-                        link.onclick = function () {
-                            read(textDaily, link.textContent)
-                        }
-                        newItem.appendChild(link);
-                        ulist.appendChild(newItem);
                     }
                 )
             })
@@ -98,15 +124,15 @@
             dailyText.value = text;
         }
 
-        function giris_yap() {
-
-            if (inUser.value == "huseyin" && inPass.value == "1234") {
+        function giris_gerceklestir() {
+            if (giris_yapildi == 1) {
 
                 getDaily();
                 giris_yapildi = 1;
                 document.getElementById("log").innerText = "Log out";
                 document.getElementById("con").style.opacity = 1;
                 document.getElementById("con").style.pointerEvents = 'auto';
+                document.getElementById("log2").style.display = 'none';
                 //var delayInMilliseconds = 2000;
 
                 //setTimeout(function () {
@@ -124,44 +150,93 @@
                 document.getElementById("con").style.opacity = 0.6;
                 document.getElementById("log").innerText = "Log In";
                 document.getElementById("con").style.pointerEvents = 'none';
+                document.getElementById("log2").style.display = 'block';
 
             }
             document.getElementById('id01').style.display = 'none';
+        }
+        function giris_yap() {
+            
+            var rootRef = firebase.database().ref();
+            var urlRef = rootRef.child("users");
+            urlRef.on("value", function (snapshot) {
+                
+                snapshot.forEach(
+                    function (child) {
+                        let a = child.val();
+                        if (a["username"] == inUser.value && a["password"] == inPass.value) {
+                            giris_yapildi = 1;
+                            uId = a["userid"];
+                            giris_gerceklestir();
+                        }
+                        
+                        
+                    })
+                if (giris_yapildi != 1) {
+                    giris_yapildi = 0;
+                    giris_gerceklestir();
+
+                }
+
+                
+            }
+            )
+           
 
         }
+        var uye_olabilir = 1;
+        function uye_islemini_gerceklestir(userid) {
 
+            if (uye_olabilir == 0)
+                alert("There is such a user name, please try again !!");
+            else if (sinPass.value != sinPass2.value) {
+                alert("Passwords do not match, please try again !!");
+            }
+            else {
+                var rootRef = firebase.database().ref();
+                var usersRef = rootRef.child('users');
+                var newUserRow = usersRef.push();
+                newUserRow.set({
+                    password: sinPass.value,
+                    userid: userid,
+                    username: sinUser.value
+                });
 
-        //function linkLoad() {
-        //    var mList = document.getElementById("menuList");
-        //    var anchors = mList.getElementsByTagName("a");
-        //    for (var i = 0; i < anchors.length; i++) {
-        //        var name = anchors[i].textContent;
-        //        anchors[i].addEventListener("click",
-        //            function (event) {
-        //                event.preventDefault();
-        //            },
-        //            false);
-        //    }
-        //}
+                alert('Succes \n Registration Successful :)')
+                document.getElementById('singup').style.display = 'none';
+            }
+        }
+
+        function uye_ol() {
+
+            uye_olabilir = 1;
+            var uyeid=0;
+            var rootRef = firebase.database().ref();
+            var urlRef = rootRef.child("users");
+            urlRef.on("value", function (snapshot) {
+
+                snapshot.forEach(
+                    function (child) {
+                        let a = child.val();
+                        if (a["username"] == sinUser.value)
+                            uye_olabilir = 0;
+                        if (parseInt(uyeid) < parseInt(a["userid"]))
+                            uyeid = a["userid"];
+
+                    })
+                    
+                uyeid = parseInt(uyeid) + 1;
+                uye_islemini_gerceklestir(uyeid); 
+                
+            })
+            
+        }
 
     </script>
 
-
-    <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase.js"></script>
-    <script>
-        // Initialize Firebase
-        var config = {
-            apiKey: "AIzaSyCIFpRngDl7RkwbTz_qY-N8qtNq5JeGDL8",
-            authDomain: "daily-b47b4.firebaseapp.com",
-            databaseURL: "https://daily-b47b4.firebaseio.com",
-            projectId: "daily-b47b4",
-            storageBucket: "daily-b47b4.appspot.com",
-            messagingSenderId: "208212779745"
-        };
-        firebase.initializeApp(config);
-    </script>
 
     <style>
+
         * {
             box-sizing: border-box;
             font-family: Arial, Helvetica, sans-serif;
@@ -441,42 +516,54 @@
         }
 
         .ref {
-            font-size:9pt;
-            text-decoration: none; 
+            font-size: 9pt;
+            text-decoration: none;
             color: white;
         }
     </style>
 </head>
 <body>
-
     <div class="topnav">
-        <p style="color:white; float:left; padding-left:15px;">Hüseyin's Daily</p>
+        <p style="color:white; float:left; padding-left:15px;">Daily</p>
         <a id="log" href="#" onclick="kullanici_giris_ekrani()">Log In</a>
-        <div id="id01" class="modal">
+        <a id="log2" href="#" onclick="singup()">Sing Up</a>
 
+        <div id="id01" class="modal">
             <div class="modal-content animate">
                 <div class="imgcontainer">
-                    <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+                    <span onclick="document.getElementById('id01').style.display = 'none'; document.getElementById('log2').style.display = 'block';" class="close" title="Close Modal">&times;</span>
                     <img src="img_avatar2.png" alt="Avatar" class="avatar">
                 </div>
-
                 <div class="container">
                     <label for="uname"><b>Username</b></label>
                     <input id="inUser" type="text" placeholder="Enter Username" name="uname" required>
-
                     <label for="psw"><b>Password</b></label>
                     <input id="inPass" type="password" placeholder="Enter Password" name="psw" required>
-
                     <button type="submit" onclick="giris_yap()">Login</button>
                 </div>
-
                 <div class="container" style="background-color:#f1f1f1">
-                    <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+                    <button type="button" onclick="document.getElementById('id01').style.display = 'none'; document.getElementById('log2').style.display = 'block';" class="cancelbtn">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="singup" class="modal">
+            <div class="modal-content animate">
+                <div class="imgcontainer">
+                    <span onclick="document.getElementById('singup').style.display='none'" class="close" title="Close Modal">&times;</span>
+                </div>
+                <div class="container">
+                    <label for="uname"><b>Username</b></label>
+                    <input id="sinUser" type="text" placeholder="Enter Username" name="uname" required>
+                    <label for="psw"><b>Password</b></label>
+                    <input id="sinPass" type="password" placeholder="Enter Password" name="psw" required>
+                    <label for="psw"><b>Password (Again)</b></label>
+                    <input id="sinPass2" type="password" placeholder="Enter Password (Again)" name="psw" required>
+                    <button type="submit" onclick="uye_ol()">Sing Up</button>
                 </div>
             </div>
         </div>
     </div>
-
     <div class="content">
         <div class="menu">
             <h2>Days</h2>
@@ -492,12 +579,9 @@
                 <button id="Kaydet" type="button" onclick="saveDaily()" style="pointer-events:none; opacity:0.5">Kaydet</button>
             </div>
         </div>
-
     </div>
-
     <div class="footer">
         <p style="text-align:right">design By Hüseyin Çolak</p>
-
         <div style="font-size:9pt; padding-left:15px; text-decoration: none; color: white;">
             <p>
                 References
